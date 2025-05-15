@@ -7,9 +7,35 @@ provider:
   name: aws
   runtime: nodejs20.x
   region: us-east-1
+  environment:
+    TODO_TABLE: TodoTable
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - dynamodb:PutItem
+        - dynamodb:GetItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:Query
+        - dynamodb:Scan
+      Resource: "arn:aws:dynamodb:us-east-1:122610487174:table/TodoTable"
 
 functions:
-  myTestFN:
+  todoApp:
     handler: handler.handler
     events:
       - httpApi: "*"
+
+resources:
+  Resources:
+    TodoTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: TodoTable
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
