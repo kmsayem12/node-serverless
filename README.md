@@ -51,14 +51,13 @@ _Note_: In current form, after deployment, your API is public and can be invoked
 
 After successful deployment, you can call the created application via HTTP:
 
-```
-curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/
-```
-
-Which should result in the following response:
+Create todos example
 
 ```json
-{ "message": "Hello from root!" }
+curl -X POST https://<your-api-id>.execute-api.us-east-1.amazonaws.com/todos \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Learn Serverless"}'
+
 ```
 
 ### Local development
